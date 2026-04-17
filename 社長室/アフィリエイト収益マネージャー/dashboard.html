@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A8 Affiliate Manager Dashboard</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-primary: #818cf8;
+            --accent-secondary: #c084fc;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --investment-color: #4ade80;
+            --engineer-color: #60a5fa;
+            --other-color: #fb923c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 2rem;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3rem;
+            background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        p.subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* Controls Section */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            background: var(--glass-bg);
+            padding: 0.4rem;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .tab {
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 600;
+            user-select: none;
+        }
+
+        .tab.active {
+            background: var(--accent-primary);
+            box-shadow: 0 4px 12px rgba(129, 140, 248, 0.4);
+        }
+
+        .tab:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .search-box {
+            position: relative;
+            flex-grow: 1;
+            max-width: 400px;
+        }
+
+        .search-box input {
+            width: 100%;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 0.8rem 1rem 0.8rem 2.8rem;
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.1);
+        }
+
+        .search-box svg {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            fill: var(--text-secondary);
+            width: 1.2rem;
+            height: 1.2rem;
+        }
+
+        /* Grid Section */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .category-box {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 1.5rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .category-box:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .box-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .box-header h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+
+        .box-items {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .box-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 0.75rem;
+            border-radius: 12px;
+            transition: background 0.2s;
+            cursor: pointer;
+            position: relative;
+            border: 1px solid transparent;
+        }
+
+        .box-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .checkbox-link {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--text-secondary);
+            border-radius: 5px;
+            flex-shrink: 0;
+            margin-top: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .box-item:hover .checkbox-link {
+            border-color: var(--accent-primary);
+            background: rgba(129, 140, 248, 0.1);
+        }
+
+        .item-content {
+            flex-grow: 1;
+        }
+
+        .item-name {
+            font-size: 0.95rem;
+            font-weight: 500;
+            line-height: 1.4;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .item-link {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-family: monospace;
+            opacity: 0.6;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 300px;
+        }
+
+        /* Category Color Themes */
+        .box-投資 {
+            border-top: 4px solid var(--investment-color);
+        }
+
+        .box-投資 .box-header h2 {
+            color: var(--investment-color);
+        }
+
+        .box-投資 .checkbox-link {
+            border-color: rgba(74, 222, 128, 0.4);
+        }
+
+        .box-エンジニア {
+            border-top: 4px solid var(--engineer-color);
+        }
+
+        .box-エンジニア .box-header h2 {
+            color: var(--engineer-color);
+        }
+
+        .box-エンジニア .checkbox-link {
+            border-color: rgba(96, 165, 250, 0.4);
+        }
+
+        .box-その他 {
+            border-top: 4px solid var(--other-color);
+        }
+
+        .box-その他 .box-header h2 {
+            color: var(--other-color);
+        }
+
+        .box-その他 .checkbox-link {
+            border-color: rgba(251, 146, 60, 0.4);
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--accent-primary);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(100px);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-box {
+                max-width: none;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Affiliate Manager</h1>
+            <p class="subtitle">Categorized Programs & Tracking Links</p>
+        </header>
+
+        <div class="controls">
+            <div class="tabs" id="categoryTabs">
+                <div class="tab active" data-category="all">ALL</div>
+                <div class="tab" data-category="投資">投資</div>
+                <div class="tab" data-category="エンジニア">エンジニア</div>
+                <div class="tab" data-category="その他">その他</div>
+            </div>
+            <div class="search-box">
+                <svg viewBox="0 0 24 24">
+                    <path
+                        d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+                </svg>
+                <input type="text" id="searchInput" placeholder="Search programs...">
+            </div>
+        </div>
+
+        <div class="grid" id="programGrid">
+            <!-- Boxes will be injected here -->
+        </div>
+    </div>
+
+    <div id="toast" class="toast">Copied to clipboard! ✨</div>
+
+    <script src="dashboard_data.js"></script>
+    <script>
+        const grid = document.getElementById('programGrid');
+        const searchInput = document.getElementById('searchInput');
+        const tabs = document.querySelectorAll('.tab');
+        const toast = document.getElementById('toast');
+
+        let currentCategory = 'all';
+        let searchQuery = '';
+
+        function showToast() {
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        async function copyToClipboard(text) {
+            try {
+                await navigator.clipboard.writeText(text);
+                showToast();
+            } catch (err) {
+                console.error('Failed to copy: ', err);
+            }
+        }
+
+        function renderCards() {
+            const filtered = AFFILIATE_DATA.filter(item => {
+                const matchesCategory = currentCategory === 'all' || item.category === currentCategory;
+                const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase());
+                return matchesCategory && matchesSearch;
+            });
+
+            // Group by category
+            const grouped = filtered.reduce((acc, item) => {
+                if (!acc[item.category]) acc[item.category] = [];
+                acc[item.category].push(item);
+                return acc;
+            }, {});
+
+            const categories = currentCategory === 'all' ? ['投資', 'エンジニア', 'その他'] : [currentCategory];
+
+            grid.innerHTML = categories.map(cat => {
+                const items = grouped[cat] || [];
+                if (items.length === 0 && currentCategory !== 'all') return '<p>No items found.</p>';
+                if (items.length === 0) return '';
+
+                return `
+                    <div class="category-box box-${cat}">
+                        <div class="box-header">
+                            <div class="checkbox-link" style="border-width: 0; background: var(--accent-primary); width: 8px; height: 18px; border-radius: 2px;"></div>
+                            <h2>${cat}</h2>
+                        </div>
+                        <div class="box-items">
+                            ${items.map(item => `
+                                <div class="box-item" onclick="copyToClipboard('${item.tracking_url}')">
+                                    <div class="checkbox-link">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                    </div>
+                                    <div class="item-content">
+                                        <div class="item-name">${item.name}</div>
+                                        <div class="item-link">${item.tracking_url}</div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Event Listeners
+        searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value;
+            renderCards();
+        });
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                currentCategory = tab.dataset.category;
+                renderCards();
+            });
+        });
+
+        // Initial render
+        renderCards();
+    </script>
+
+</body>
+
+</html>

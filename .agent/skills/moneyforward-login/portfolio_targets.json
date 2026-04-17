@@ -1,0 +1,9 @@
+{
+    "target_trust_etf": 5000000,
+    "target_commodity": 2000000,
+    "target_us_stock": 4000000,
+    "target_jp_stock": 5000000,
+    "target_cash": 1000000,
+    "target_year": 2026,
+    "target_month": 12
+}

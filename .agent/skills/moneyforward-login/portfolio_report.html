@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Portfolio Analysis Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background: #0f172a; color: #f8fafc; font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+            margin: 0; padding: 40px 20px; line-height: 1.6;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        h2 { color: #e2e8f0; font-weight: 600; margin-bottom: 20px; }
+        h1 { text-align: center; margin-bottom: 40px; font-size: 2.2rem; }
+        .card {
+            background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 30px; margin-bottom: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .stat-box { background: rgba(0,0,0,0.2); padding: 15px; border-radius: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.05); }
+        .stat-title { font-size: 0.85rem; color: #94a3b8; margin-bottom: 5px; }
+        .stat-val { font-size: 1.4rem; font-weight: 700; }
+        .val-us { color: #3b82f6; }
+        .val-dom { color: #ef4444; }
+        .val-trust { color: #10b981; }
+        .val-commo { color: #fbbf24; }
+        .val-margin { color: #ec4899; }
+        .val-crypto { color: #8b5cf6; }
+        .val-cash { color: #38bdf8; }
+        
+        .progress-bar { display: flex; height: 30px; border-radius: 15px; overflow: hidden; margin: 30px 0; outline: 1px solid rgba(255,255,255,0.1); }
+        .bar { display: flex; justify-content: center; align-items: center; font-size: 0.75rem; font-weight: bold; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
+        
+        ul.risks { list-style-type: none; padding: 0; }
+        ul.risks li { padding: 15px 20px; margin-bottom: 10px; background: rgba(0,0,0,0.3); border-radius: 8px; border-left: 4px solid; }
+        .text-red { border-color: #ef4444; }
+        .text-yellow { border-color: #fbbf24; }
+        .text-green { border-color: #10b981; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Portfolio Analysis Report</h1>
+        
+        <div class="card">
+            <h2>資産アロケーション（割合・評価損益）</h2>
+            <div class="stat-grid">
+                <div class="stat-box"><div class="stat-title">米国株</div><div class="stat-val val-us">3,741,245 円<br><small>(36.4%)</small></div><div style="font-size:0.9rem; margin-top:5px; color:#10b981">+919,190 円 (+32.6%)</div></div>
+                <div class="stat-box"><div class="stat-title">日本株</div><div class="stat-val val-dom">1,411,557 円<br><small>(13.7%)</small></div><div style="font-size:0.9rem; margin-top:5px; color:#10b981">+307,456 円 (+27.8%)</div></div>
+                <div class="stat-box"><div class="stat-title">投資信託</div><div class="stat-val val-trust">3,442,691 円<br><small>(33.5%)</small></div><div style="font-size:0.9rem; margin-top:5px; color:#10b981">+1,284,749 円 (+59.5%)</div></div>
+                <div class="stat-box"><div class="stat-title">コモディティ</div><div class="stat-val val-commo">1,147,220 円<br><small>(11.2%)</small></div><div style="font-size:0.9rem; margin-top:5px; color:#ef4444">-14,682 円 (-1.3%)</div></div>
+                <div class="stat-box"><div class="stat-title">信用取引</div><div class="stat-val val-margin">382,116 円<br><small>(3.7%)</small></div></div>
+                <div class="stat-box"><div class="stat-title">暗号資産</div><div class="stat-val val-crypto">100,000 円<br><small>(1.0%)</small></div></div>
+                <div class="stat-box"><div class="stat-title">現金・預金</div><div class="stat-val val-cash">49,178 円<br><small>(0.5%)</small></div></div>
+            </div>
+            
+            <div style="position: relative; height:300px; width:100%; margin: 30px 0;">
+                <canvas id="allocationPieChart"></canvas>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; color: #94a3b8;">
+                <div>上記4種 損益 合計: <b style="color:#10b981; font-size:1.1rem;">+2,496,713 円 (+34.5%)</b></div>
+                <div>総資産額 (概算): <b style="font-size:1.1rem; color:#fff;">10,274,007 円</b></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>🌍 全体的なリスク・戦略レポート</h2>
+            <ul class="risks">
+                <li class='text-green'>✅ コモディティ比率は適切で、インフレへの備えとして機能しています。</li><li class='text-yellow'>⚠️ 現金比率が5%を下回っています。急な出費や暴落時の買い増し（押し目買い）資金として少し心許ない可能性があります。</li>
+            </ul>
+        </div>
+        
+        <div class="card">
+            <h2>💹 信用取引・レバレッジ管理レポート</h2>
+            <ul class="risks">
+                <li><h3 style='margin-top:0'>📉 個別銘柄スイング戦略評価</h3></li><li class='text-red'>🚫 <b>純銀上場信託</b>: -75,452円 (-33.8%) <br>スイングトレードの目安（-5%〜-8%）を超えて損失が拡大しています。<b>直ちに損切り（ロスカット）を実行すべき水準です。</b>資金拘束と追証リスクを避けるため、未練を断ち切るのが賢明です。</li><li class='text-red'>🚫 <b>純銀上場信託</b>: -39,774円 (-35.0%) <br>スイングトレードの目安（-5%〜-8%）を超えて損失が拡大しています。<b>直ちに損切り（ロスカット）を実行すべき水準です。</b>資金拘束と追証リスクを避けるため、未練を断ち切るのが賢明です。</li><li class='text-red'>🚫 <b>純銀上場信託</b>: -19,256円 (-34.3%) <br>スイングトレードの目安（-5%〜-8%）を超えて損失が拡大しています。<b>直ちに損切り（ロスカット）を実行すべき水準です。</b>資金拘束と追証リスクを避けるため、未練を断ち切るのが賢明です。</li><li class='text-red'>🚫 <b>純銀上場信託</b>: -4,061円 (-9.9%) <br>スイングトレードの目安（-5%〜-8%）を超えて損失が拡大しています。<b>直ちに損切り（ロスカット）を実行すべき水準です。</b>資金拘束と追証リスクを避けるため、未練を断ち切るのが賢明です。</li><li class='text-red'>🚫 <b>純銀上場信託</b>: -5,558円 (-13.1%) <br>スイングトレードの目安（-5%〜-8%）を超えて損失が拡大しています。<b>直ちに損切り（ロスカット）を実行すべき水準です。</b>資金拘束と追証リスクを避けるため、未練を断ち切るのが賢明です。</li><li class='text-yellow'>⚠️ <b>純銀上場信託</b>: -1,449円 (-3.8%) <br>含み損が発生しています。あらかじめ設定した損切りライン（例: -5%）に到達したら即座に切る準備をしてください。</li><li class='text-yellow'>⚠️ <b>純銀上場信託</b>: -2,960円 (-3.9%) <br>含み損が発生しています。あらかじめ設定した損切りライン（例: -5%）に到達したら即座に切る準備をしてください。</li><li class='text-yellow'>⚠️ <b>純銀上場信託</b>: -1,718円 (-4.4%) <br>含み損が発生しています。あらかじめ設定した損切りライン（例: -5%）に到達したら即座に切る準備をしてください。</li><li class='text-green'>✨ <b>純銀上場信託</b>: +3828円 (+11.6%) <br>素晴らしい含み益です！スイングの目標達成圏内です。半分を利確（分割利確）しつつ、残りで上値アウトを狙う戦略を推奨します。</li><li class='text-green'>✨ <b>純銀上場信託</b>: +4209円 (+12.9%) <br>素晴らしい含み益です！スイングの目標達成圏内です。半分を利確（分割利確）しつつ、残りで上値アウトを狙う戦略を推奨します。</li><li class='text-green'>✅ <b>純銀上場信託</b>: +3085円 (+9.1%) <br>順調です。トレイリングストップ（買値を下回らないように逆指値）を置きながら利益を伸ばしましょう。</li><li class='text-green'>✅ <b>純銀上場信託</b>: +357円 (+0.5%) <br>順調です。トレイリングストップ（買値を下回らないように逆指値）を置きながら利益を伸ばしましょう。</li><li class='text-green'>✅ <b>純銀上場信託</b>: +489円 (+0.7%) <br>順調です。トレイリングストップ（買値を下回らないように逆指値）を置きながら利益を伸ばしましょう。</li><li class='text-red'>🚫 <b>東急建設</b>: -21,019円 (-12.9%) <br>スイングトレードの目安（-5%〜-8%）を超えて損失が拡大しています。<b>直ちに損切り（ロスカット）を実行すべき水準です。</b>資金拘束と追証リスクを避けるため、未練を断ち切るのが賢明です。</li><li class='text-red'>🚫 <b>東急建設</b>: -7,744円 (-5.2%) <br>スイングトレードの目安（-5%〜-8%）を超えて損失が拡大しています。<b>直ちに損切り（ロスカット）を実行すべき水準です。</b>資金拘束と追証リスクを避けるため、未練を断ち切るのが賢明です。</li><li class='text-green'>✨ <b>四電工</b>: +19416円 (+11.3%) <br>素晴らしい含み益です！スイングの目標達成圏内です。半分を利確（分割利確）しつつ、残りで上値アウトを狙う戦略を推奨します。</li><li class='text-green'>✨ <b>四電工</b>: +17627円 (+10.1%) <br>素晴らしい含み益です！スイングの目標達成圏内です。半分を利確（分割利確）しつつ、残りで上値アウトを狙う戦略を推奨します。</li><li class='text-red'>🚫 <b>フィットイージー</b>: -36,745円 (-12.8%) <br>スイングトレードの目安（-5%〜-8%）を超えて損失が拡大しています。<b>直ちに損切り（ロスカット）を実行すべき水準です。</b>資金拘束と追証リスクを避けるため、未練を断ち切るのが賢明です。</li><li class='text-yellow'>⚠️ <b>九州フィナンシャルG</b>: -615円 (-0.5%) <br>含み損が発生しています。あらかじめ設定した損切りライン（例: -5%）に到達したら即座に切る準備をしてください。</li><li class='text-red'>🚫 <b>SBIホールディングス</b>: -19,857円 (-5.9%) <br>スイングトレードの目安（-5%〜-8%）を超えて損失が拡大しています。<b>直ちに損切り（ロスカット）を実行すべき水準です。</b>資金拘束と追証リスクを避けるため、未練を断ち切るのが賢明です。</li><li class='text-green'>✅ <b>ジャパン・ホテル・リート</b>: +1784円 (+2.3%) <br>順調です。トレイリングストップ（買値を下回らないように逆指値）を置きながら利益を伸ばしましょう。</li><li class='text-yellow'>⚠️ <b>北海道電力</b>: -595円 (-0.6%) <br>含み損が発生しています。あらかじめ設定した損切りライン（例: -5%）に到達したら即座に切る準備をしてください。</li><li class='text-green'>✅ 信用取引・保証金の割合は健全な範囲（10%以下）に収まっています。</li>
+            </ul>
+        </div>
+        
+        <div class="card">
+            <h2>📈 資産推移グラフ</h2>
+            <div style="position: relative; height:400px; width:100%; margin-bottom: 30px;">
+                <canvas id="totalAssetsChart"></canvas>
+            </div>
+            <div style="position: relative; height:400px; width:100%;">
+                <canvas id="allocationChart"></canvas>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>📊 パフォーマンス比較（成長率）</h2>
+            <div style="position: relative; height:350px; width:100%; margin-bottom: 30px;">
+                <canvas id="growthRateChart"></canvas>
+            </div>
+            <table style="width:100%; border-collapse: collapse; margin-top: 20px; font-size: 0.95rem;">
+                <thead>
+                    <tr style="border-bottom: 2px solid rgba(255,255,255,0.1); color: #94a3b8;">
+                        <th style="text-align:left; padding: 10px;">アセット</th>
+                        <th style="text-align:right; padding: 10px;">評価額</th>
+                        <th style="text-align:right; padding: 10px;">1ヶ月</th>
+                        <th style="text-align:right; padding: 10px;">3ヶ月</th>
+                        <th style="text-align:right; padding: 10px;">年初来 (YTD)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+            <tr style='border-bottom: 1px solid rgba(255,255,255,0.05);'>
+                <td style='padding: 12px 10px;'>Total</td>
+                <td style='text-align:right; padding: 12px 10px; color:#fff;'>10,274,007 円</td>
+                <td style='text-align:right; padding: 12px 10px; color:#ef4444'>-0.4%</td>
+                <td style='text-align:right; padding: 12px 10px; color:#ef4444'>-3.1%</td>
+                <td style='text-align:right; padding: 12px 10px; color:#ef4444'>-3.0%</td>
+            </tr>
+            <tr style='border-bottom: 1px solid rgba(255,255,255,0.05);'>
+                <td style='padding: 12px 10px;'>US Stocks</td>
+                <td style='text-align:right; padding: 12px 10px; color:#fff;'>3,741,245 円</td>
+                <td style='text-align:right; padding: 12px 10px; color:#10b981'>+5.5%</td>
+                <td style='text-align:right; padding: 12px 10px; color:#ef4444'>-2.4%</td>
+                <td style='text-align:right; padding: 12px 10px; color:#ef4444'>-3.5%</td>
+            </tr>
+            <tr style='border-bottom: 1px solid rgba(255,255,255,0.05);'>
+                <td style='padding: 12px 10px;'>JP Stocks</td>
+                <td style='text-align:right; padding: 12px 10px; color:#fff;'>1,411,557 円</td>
+                <td style='text-align:right; padding: 12px 10px; color:#ef4444'>-40.2%</td>
+                <td style='text-align:right; padding: 12px 10px; color:#ef4444'>-12.9%</td>
+                <td style='text-align:right; padding: 12px 10px; color:#ef4444'>-4.7%</td>
+            </tr>
+            <tr style='border-bottom: 1px solid rgba(255,255,255,0.05);'>
+                <td style='padding: 12px 10px;'>Trusts/ETF</td>
+                <td style='text-align:right; padding: 12px 10px; color:#fff;'>3,442,691 円</td>
+                <td style='text-align:right; padding: 12px 10px; color:#10b981'>+3.5%</td>
+                <td style='text-align:right; padding: 12px 10px; color:#ef4444'>-5.5%</td>
+                <td style='text-align:right; padding: 12px 10px; color:#ef4444'>-5.6%</td>
+            </tr>
+            <tr style='border-bottom: 1px solid rgba(255,255,255,0.05);'>
+                <td style='padding: 12px 10px;'>Commodity</td>
+                <td style='text-align:right; padding: 12px 10px; color:#fff;'>1,147,220 円</td>
+                <td style='text-align:right; padding: 12px 10px; color:#10b981'>+0.0%</td>
+                <td style='text-align:right; padding: 12px 10px; color:#10b981'>+0.0%</td>
+                <td style='text-align:right; padding: 12px 10px; color:#10b981'>+0.0%</td>
+            </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>🎯 2026年 年末目標 進捗管理</h2>
+            
+            <div style="margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                    <span>投資信託</span>
+                    <span style="color: #94a3b8;">3,442,691 / 5,000,000 円 (68.9%)</span>
+                </div>
+                <div style="height: 12px; background: rgba(0,0,0,0.3); border-radius: 6px; overflow: hidden;">
+                    <div style="width: 68.85382%; height: 100%; background: linear-gradient(90deg, #3b82f6, #10b981); border-radius: 6px;"></div>
+                </div>
+                <div style="text-align: right; font-size: 0.8rem; color: #94a3b8; margin-top: 4px;">不足額: 1,557,309 円</div>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                    <span>コモディティ</span>
+                    <span style="color: #94a3b8;">1,147,220 / 2,000,000 円 (57.4%)</span>
+                </div>
+                <div style="height: 12px; background: rgba(0,0,0,0.3); border-radius: 6px; overflow: hidden;">
+                    <div style="width: 57.361%; height: 100%; background: linear-gradient(90deg, #3b82f6, #10b981); border-radius: 6px;"></div>
+                </div>
+                <div style="text-align: right; font-size: 0.8rem; color: #94a3b8; margin-top: 4px;">不足額: 852,780 円</div>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                    <span>米国株</span>
+                    <span style="color: #94a3b8;">3,741,245 / 4,000,000 円 (93.5%)</span>
+                </div>
+                <div style="height: 12px; background: rgba(0,0,0,0.3); border-radius: 6px; overflow: hidden;">
+                    <div style="width: 93.531125%; height: 100%; background: linear-gradient(90deg, #3b82f6, #10b981); border-radius: 6px;"></div>
+                </div>
+                <div style="text-align: right; font-size: 0.8rem; color: #94a3b8; margin-top: 4px;">不足額: 258,755 円</div>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                    <span>日本株(ETFを含む)</span>
+                    <span style="color: #94a3b8;">1,411,557 / 5,000,000 円 (28.2%)</span>
+                </div>
+                <div style="height: 12px; background: rgba(0,0,0,0.3); border-radius: 6px; overflow: hidden;">
+                    <div style="width: 28.23114%; height: 100%; background: linear-gradient(90deg, #3b82f6, #10b981); border-radius: 6px;"></div>
+                </div>
+                <div style="text-align: right; font-size: 0.8rem; color: #94a3b8; margin-top: 4px;">不足額: 3,588,443 円</div>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                    <span>現金・預金</span>
+                    <span style="color: #94a3b8;">49,178 / 1,000,000 円 (4.9%)</span>
+                </div>
+                <div style="height: 12px; background: rgba(0,0,0,0.3); border-radius: 6px; overflow: hidden;">
+                    <div style="width: 4.9178%; height: 100%; background: linear-gradient(90deg, #3b82f6, #10b981); border-radius: 6px;"></div>
+                </div>
+                <div style="text-align: right; font-size: 0.8rem; color: #94a3b8; margin-top: 4px;">不足額: 950,822 円</div>
+            </div>
+            
+            
+            <div style="margin-top: 30px; padding: 20px; background: rgba(59, 130, 246, 0.1); border-radius: 12px; border: 1px solid rgba(59, 130, 246, 0.2);">
+                <h3 style="margin-top:0; color: #60a5fa;">💡 目標達成に向けた投資プラン</h3>
+                <p>年末（残り9ヶ月）までに目標額を達成するには、月次で <b>平均 800,901 円</b> の積立または資産成長が必要です。</p>
+                <ul style="font-size: 0.9rem; color: #cbd5e1; padding-left: 20px;">
+                    <li>投資信託を最優先（残り 1,557,309 円）としつつ、守りのコモディティも並行して積み増し。</li>
+                    <li>米国株・日本株は現在の損益率（1ヶ月成長率）を維持できれば、自然増による目標達成の可能性も高いです。</li>
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+
+    <script>
+        const rawHistory = [{"date": "2021/09/01", "total_assets": 49501, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2021/10/01", "total_assets": 53426, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2021/11/01", "total_assets": 183333, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2021/12/01", "total_assets": 340566, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2022/01/01", "total_assets": 545683, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2022/02/01", "total_assets": 732105, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2022/03/01", "total_assets": 960714, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2022/04/01", "total_assets": 1022502, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2022/05/01", "total_assets": 1154610, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2022/06/01", "total_assets": 1270012, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2022/07/01", "total_assets": 1363996, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2022/08/01", "total_assets": 1365855, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2022/09/01", "total_assets": 1653917, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2022/10/01", "total_assets": 1508459, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2022/11/01", "total_assets": 1597123, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2022/12/01", "total_assets": 1562743, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2023/01/01", "total_assets": 1325330, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2023/02/01", "total_assets": 2204192, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2023/03/01", "total_assets": 1972551, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2023/04/01", "total_assets": 2109896, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2023/05/01", "total_assets": 2041059, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2023/06/01", "total_assets": 1856729, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2023/07/01", "total_assets": 2785034, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2023/08/01", "total_assets": 2700862, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2023/09/01", "total_assets": 2762520, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2023/10/01", "total_assets": 2815172, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2023/11/01", "total_assets": 2525715, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2023/12/01", "total_assets": 3407297, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2024/01/01", "total_assets": 3248970, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2024/02/01", "total_assets": 3133898, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2024/03/01", "total_assets": 2863523, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2024/04/01", "total_assets": 4040443, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2024/05/01", "total_assets": 4261974, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2024/06/01", "total_assets": 4432556, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2024/07/01", "total_assets": 4625815, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2024/08/01", "total_assets": 4586814, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2024/09/01", "total_assets": 4845248, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2024/10/01", "total_assets": 5206320, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2024/11/01", "total_assets": 6257849, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2024/12/01", "total_assets": 6756425, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2025/01/01", "total_assets": 6028785, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2025/02/01", "total_assets": 5432321, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2025/03/01", "total_assets": 5279031, "domestic": 0, "us": 0, "trust": 0, "cash": 0, "commodity": 0, "crypto": 0, "margin": 0}, {"date": "2025/04/01", "total_assets": 6134040, "domestic": 593020, "us": 2608640, "trust": 2284987, "cash": 672638, "commodity": 0, "crypto": 100000, "margin": 0}, {"date": "2025/05/01", "total_assets": 6697332, "domestic": 595442, "us": 3342219, "trust": 2455029, "cash": 189989, "commodity": 0, "crypto": 100000, "margin": 0}, {"date": "2025/06/01", "total_assets": 7203541, "domestic": 599761, "us": 3709955, "trust": 2573485, "cash": 14673, "commodity": 0, "crypto": 96060, "margin": 0}, {"date": "2025/06/22", "total_assets": 7047364, "domestic": 599249, "us": 3753901, "trust": 2571606, "cash": 26548, "commodity": 0, "crypto": 96060, "margin": 0}, {"date": "2025/06/25", "total_assets": 7404364, "domestic": 589372, "us": 3904547, "trust": 2596054, "cash": 218754, "commodity": 0, "crypto": 96060, "margin": 0}, {"date": "2025/06/28", "total_assets": 7372417, "domestic": 597604, "us": 3867213, "trust": 2686586, "cash": 124954, "commodity": 0, "crypto": 96060, "margin": 0}, {"date": "2025/06/29", "total_assets": 7372417, "domestic": 597604, "us": 3867213, "trust": 2686586, "cash": 124954, "commodity": 0, "crypto": 96060, "margin": 0}, {"date": "2025/07/01", "total_assets": 7372417, "domestic": 597604, "us": 3867213, "trust": 2686586, "cash": 124954, "commodity": 0, "crypto": 96060, "margin": 0}, {"date": "2025/07/06", "total_assets": 7451993, "domestic": 607604, "us": 3867213, "trust": 2686586, "cash": 124954, "commodity": 0, "crypto": 96060, "margin": 0}, {"date": "2025/07/12", "total_assets": 7732320, "domestic": 602937, "us": 3877194, "trust": 2784858, "cash": 365796, "commodity": 0, "crypto": 101535, "margin": 0}, {"date": "2025/07/19", "total_assets": 7947094, "domestic": 652643, "us": 4112281, "trust": 2829703, "cash": 227821, "commodity": 0, "crypto": 124646, "margin": 0}, {"date": "2025/07/26", "total_assets": 8063725, "domestic": 731838, "us": 3819274, "trust": 2838259, "cash": 544575, "commodity": 0, "crypto": 129779, "margin": 0}, {"date": "2025/08/01", "total_assets": 7835340, "domestic": 32563, "us": 3697078, "trust": 2884798, "cash": 400556, "commodity": 0, "crypto": 120345, "margin": 0}, {"date": "2025/08/02", "total_assets": 7835340, "domestic": 732563, "us": 3697078, "trust": 2884798, "cash": 400556, "commodity": 0, "crypto": 120345, "margin": 0}, {"date": "2025/08/09", "total_assets": 8176713, "domestic": 759075, "us": 4030723, "trust": 2846086, "cash": 400587, "commodity": 0, "crypto": 140242, "margin": 0}, {"date": "2025/08/16", "total_assets": 8358696, "domestic": 896695, "us": 3877190, "trust": 2908591, "cash": 521800, "commodity": 0, "crypto": 154420, "margin": 0}, {"date": "2025/08/23", "total_assets": 8388348, "domestic": 850239, "us": 3761287, "trust": 2886746, "cash": 723300, "commodity": 0, "crypto": 166776, "margin": 0}, {"date": "2025/09/01", "total_assets": 8398187, "domestic": 850239, "us": 3761287, "trust": 2886746, "cash": 723300, "commodity": 0, "crypto": 166776, "margin": 0}, {"date": "2025/09/06", "total_assets": 8398187, "domestic": 855622, "us": 3760510, "trust": 2989739, "cash": 641193, "commodity": 0, "crypto": 151123, "margin": 0}, {"date": "2025/09/13", "total_assets": 8753214, "domestic": 869729, "us": 4031306, "trust": 3015672, "cash": 671545, "commodity": 0, "crypto": 164962, "margin": 0}, {"date": "2025/09/20", "total_assets": 9066875, "domestic": 871247, "us": 4281841, "trust": 3054281, "cash": 702116, "commodity": 0, "crypto": 157390, "margin": 0}, {"date": "2025/09/21", "total_assets": 9317852, "domestic": 877539, "us": 4357421, "trust": 3073283, "cash": 867508, "commodity": 0, "crypto": 142101, "margin": 0}, {"date": "2025/10/01", "total_assets": 9317852, "domestic": 879312, "us": 4350199, "trust": 3128205, "cash": 655714, "commodity": 0, "crypto": 158309, "margin": 0}, {"date": "2025/10/04", "total_assets": 9131739, "domestic": 839312, "us": 4350199, "trust": 3128205, "cash": 655714, "commodity": 0, "crypto": 158309, "margin": 0}, {"date": "2025/10/19", "total_assets": 9252320, "domestic": 872876, "us": 4312846, "trust": 3152845, "cash": 774210, "commodity": 0, "crypto": 139543, "margin": 0}, {"date": "2025/10/25", "total_assets": 10048534, "domestic": 888861, "us": 4312280, "trust": 3253470, "cash": 1450875, "commodity": 0, "crypto": 143048, "margin": 0}, {"date": "2025/11/01", "total_assets": 10323979, "domestic": 944167, "us": 4509718, "trust": 3322196, "cash": 1406773, "commodity": 0, "crypto": 141125, "margin": 0}, {"date": "2025/11/08", "total_assets": 9678218, "domestic": 931986, "us": 3745170, "trust": 3255106, "cash": 1620519, "commodity": 0, "crypto": 125437, "margin": 0}, {"date": "2025/11/15", "total_assets": 9541064, "domestic": 1133014, "us": 3611681, "trust": 3348077, "cash": 1282809, "commodity": 0, "crypto": 165483, "margin": 0}, {"date": "2025/11/24", "total_assets": 9482700, "domestic": 1127920, "us": 3462231, "trust": 3305255, "cash": 1433337, "commodity": 0, "crypto": 153957, "margin": 0}, {"date": "2025/12/07", "total_assets": 10049701, "domestic": 1126501, "us": 3870782, "trust": 3462096, "cash": 1428566, "commodity": 0, "crypto": 161756, "margin": 0}, {"date": "2025/12/14", "total_assets": 10055635, "domestic": 1135957, "us": 3827377, "trust": 3498504, "cash": 1428145, "commodity": 0, "crypto": 165652, "margin": 0}, {"date": "2025/12/20", "total_assets": 10132906, "domestic": 1125902, "us": 3979904, "trust": 3434003, "cash": 1432152, "commodity": 0, "crypto": 160945, "margin": 0}, {"date": "2025/12/27", "total_assets": 10440403, "domestic": 1410866, "us": 3984122, "trust": 3576229, "cash": 1311605, "commodity": 0, "crypto": 157581, "margin": 0}, {"date": "2026/01/10", "total_assets": 10593739, "domestic": 1481196, "us": 3877124, "trust": 3648614, "cash": 1419996, "commodity": 0, "crypto": 166809, "margin": 0}, {"date": "2026/01/17", "total_assets": 10606764, "domestic": 1621369, "us": 3831644, "trust": 3644418, "cash": 1331776, "commodity": 0, "crypto": 177557, "margin": 0}, {"date": "2026/01/24", "total_assets": 10786616, "domestic": 1800702, "us": 3829347, "trust": 3624655, "cash": 1372998, "commodity": 0, "crypto": 158914, "margin": 0}, {"date": "2026/01/31", "total_assets": 10497183, "domestic": 1999952, "us": 3658906, "trust": 3568896, "cash": 1110515, "commodity": 0, "crypto": 158914, "margin": 0}, {"date": "2026/02/07", "total_assets": 10187048, "domestic": 1878244, "us": 3612052, "trust": 3612052, "cash": 925786, "commodity": 0, "crypto": 158914, "margin": 0}, {"date": "2026/02/14", "total_assets": 9787048, "domestic": 1948268, "us": 3536578, "trust": 3483157, "cash": 660131, "commodity": 0, "crypto": 158914, "margin": 0}, {"date": "2026/02/21", "total_assets": 10223839, "domestic": 2080385, "us": 3591365, "trust": 3550295, "cash": 842880, "commodity": 0, "crypto": 158914, "margin": 0}, {"date": "2026/02/28", "total_assets": 10525774, "domestic": 2289648, "us": 3575139, "trust": 3645811, "cash": 856262, "commodity": 0, "crypto": 158914, "margin": 0}, {"date": "2026/03/07", "total_assets": 10311631, "domestic": 2360040, "us": 3544960, "trust": 3325905, "cash": 1000726, "commodity": 0, "crypto": 80000, "margin": 0}, {"date": "2026/03/20", "total_assets": 9905743, "domestic": 2305295, "us": 3430024, "trust": 3283576, "cash": 806848, "commodity": 0, "crypto": 80000, "margin": 0}, {"date": "2026/03/28", "total_assets": 9435453, "domestic": 2407634, "us": 3284672, "trust": 3150605, "cash": 512542, "commodity": 0, "crypto": 80000, "margin": 0}, {"date": "2026/04/04", "total_assets": 9683921, "domestic": 1500746, "us": 3421228, "trust": 3206999, "cash": 120180, "commodity": 996502, "crypto": 100000, "margin": 338266}, {"date": "2026/04/11", "total_assets": 9773880, "domestic": 1450453, "dom_pl": 327532, "dom_pl_rate": 29.2, "us": 3352242, "us_pl": 519159, "us_pl_rate": 18.3, "trust": 3323482, "trust_pl": 1165539, "trust_pl_rate": 54.0, "cash": 95497, "commodity": 1055728, "commo_pl": -59999, "commo_pl_rate": -5.4, "crypto": 100000, "margin": 396478, "total_pl": 1952231, "total_pl_rate": 27.0}, {"date": "2026/04/16", "total_assets": 10147233, "domestic": 1322406, "dom_pl": 303085, "dom_pl_rate": 29.7, "us": 3666744, "us_pl": 839705, "us_pl_rate": 29.7, "trust": 3395177, "trust_pl": 1237235, "trust_pl_rate": 57.3, "cash": 50180, "commodity": 1099654, "commo_pl": -16073, "commo_pl_rate": -1.4, "crypto": 100000, "margin": 513072, "total_pl": 2363952, "total_pl_rate": 33.2}, {"date": "2026/04/18", "total_assets": 10274007, "domestic": 1411557, "dom_pl": 307456, "dom_pl_rate": 27.8, "us": 3741245, "us_pl": 919190, "us_pl_rate": 32.6, "trust": 3442691, "trust_pl": 1284749, "trust_pl_rate": 59.5, "cash": 49178, "commodity": 1147220, "commo_pl": -14682, "commo_pl_rate": -1.3, "crypto": 100000, "margin": 382116, "total_pl": 2496713, "total_pl_rate": 34.5}];
+        
+        const labels = rawHistory.map(d => d.date);
+        const lineData = rawHistory.map(d => d.total_assets);
+        const usData = rawHistory.map(d => d.us);
+        const domData = rawHistory.map(d => d.domestic);
+        const trustData = rawHistory.map(d => d.trust);
+        const commoData = rawHistory.map(d => d.commodity);
+        const marginData = rawHistory.map(d => d.margin);
+        const cryptoData = rawHistory.map(d => d.crypto);
+        const cashData = rawHistory.map(d => d.cash + d.margin);
+
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = 'Inter';
+
+        new Chart(document.getElementById('allocationPieChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['米国株', '日本株', '投資信託', 'コモディティ', '信用取引', '暗号資産', '現金・預金'],
+                datasets: [{
+                    data: [36.414662750375776, 13.73910880146373, 33.50874687938211, 11.166237282104246, 3.719249947951174, 0.9733300746242435, 0.47866426409871043],
+                    backgroundColor: ['#3b82f6', '#ef4444', '#10b981', '#fbbf24', '#ec4899', '#8b5cf6', '#38bdf8'],
+                    borderWidth: 1,
+                    borderColor: '#1e293b'
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'right', labels: { padding: 20 } },
+                    tooltip: {
+                        callbacks: { label: function(context) { return ' ' + context.label + ': ' + context.parsed.toFixed(1) + '%'; } }
+                    }
+                },
+                cutout: '65%'
+            }
+        });
+        
+        new Chart(document.getElementById('totalAssetsChart'), {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: '総資産額 (Total)',
+                    data: lineData,
+                    borderColor: '#38bdf8',
+                    backgroundColor: 'rgba(56, 189, 248, 0.1)',
+                    borderWidth: 2,
+                    pointRadius: 2,
+                    pointBackgroundColor: '#38bdf8',
+                    fill: {target: 'origin', above: 'rgba(56, 189, 248, 0.1)'},
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false }, tooltip: { mode: 'index', intersect: false } },
+                scales: {
+                    y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+        
+        const datasetsList = [
+            { label: '米国株', data: usData, backgroundColor: '#3b82f6', lastVal: usData[usData.length-1] || 0 },
+            { label: '日本株', data: domData, backgroundColor: '#ef4444', lastVal: domData[domData.length-1] || 0 },
+            { label: '投資信託', data: trustData, backgroundColor: '#10b981', lastVal: trustData[trustData.length-1] || 0 },
+            { label: 'ｺﾓﾃﾞｨﾃｨ', data: commoData, backgroundColor: '#fbbf24', lastVal: commoData[commoData.length-1] || 0 },
+            { label: '現金・預金', data: cashData, backgroundColor: '#38bdf8', lastVal: cashData[cashData.length-1] || 0 },
+            { label: '暗号資産', data: cryptoData, backgroundColor: '#8b5cf6', lastVal: cryptoData[cryptoData.length-1] || 0 }
+        ];
+        
+        datasetsList.sort((a, b) => b.lastVal - a.lastVal);
+
+        new Chart(document.getElementById('allocationChart'), {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: datasetsList
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { tooltip: { mode: 'index', intersect: false } },
+                scales: {
+                    x: { stacked: true, grid: { display: false } },
+                    y: { stacked: true, grid: { color: 'rgba(255,255,255,0.05)' } }
+                }
+            }
+        });
+        
+        new Chart(document.getElementById('growthRateChart'), {
+            type: 'bar',
+            data: {
+                labels: ['米国株', '日本株', '投資信託', 'コモディティ', '総資産'],
+                datasets: [{
+                    label: '月間成長率 (1 month %)',
+                    data: [5.537015932478795, -40.18927645294148, 3.5114051664133505, 0, -0.364869534218204],
+                    backgroundColor: ['#3b82f6', '#ef4444', '#10b981', '#fbbf24', '#38bdf8'],
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { callback: value => value + '%' } },
+                    y: { grid: { display: false } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,416 @@
+{
+  "totals": {
+    "stock_spot_domestic": 2558777,
+    "stock_spot_domestic_pl": 292774,
+    "stock_spot_us": 3741245,
+    "stock_spot_us_pl": 919190,
+    "stock_margin": 382116,
+    "investment_trust": 3442691,
+    "investment_trust_pl": 1284749,
+    "cash": 49178,
+    "crypto": 100000
+  },
+  "holdings": {
+    "stock_spot_domestic": [
+      {
+        "name": "SPDRゴールド・シェア",
+        "valuation": 210240,
+        "pl": 25755
+      },
+      {
+        "name": "SPDRゴールド・シェア",
+        "valuation": 70080,
+        "pl": 190
+      },
+      {
+        "name": "純金上場信託",
+        "valuation": 45820,
+        "pl": -355
+      },
+      {
+        "name": "純金上場信託",
+        "valuation": 137460,
+        "pl": -1848
+      },
+      {
+        "name": "純プラチナ上場信託",
+        "valuation": 19600,
+        "pl": -3220
+      },
+      {
+        "name": "純銀上場信託",
+        "valuation": 147560,
+        "pl": 2720
+      },
+      {
+        "name": "純銀上場信託",
+        "valuation": 516460,
+        "pl": -37924
+      },
+      {
+        "name": "日経平均ブル2倍",
+        "valuation": 246480,
+        "pl": 39280
+      },
+      {
+        "name": "エス・エム・エス",
+        "valuation": 17510,
+        "pl": 970
+      },
+      {
+        "name": "東急不動産HD",
+        "valuation": 41625,
+        "pl": 6285
+      },
+      {
+        "name": "東急不動産HD",
+        "valuation": 97125,
+        "pl": 14146
+      },
+      {
+        "name": "楽天グループ",
+        "valuation": 83460,
+        "pl": 5380
+      },
+      {
+        "name": "京都フィナンシャルG",
+        "valuation": 43930,
+        "pl": 19780
+      },
+      {
+        "name": "富士通",
+        "valuation": 37700,
+        "pl": 140
+      },
+      {
+        "name": "ソニーグループ",
+        "valuation": 50925,
+        "pl": 555
+      },
+      {
+        "name": "IHI",
+        "valuation": 46800,
+        "pl": -420
+      },
+      {
+        "name": "三菱商事",
+        "valuation": 495200,
+        "pl": 191577
+      },
+      {
+        "name": "SBIホールディングス",
+        "valuation": 25480,
+        "pl": -760
+      },
+      {
+        "name": "ソフトバンク",
+        "valuation": 121122,
+        "pl": 14403
+      },
+      {
+        "name": "北海道電力",
+        "valuation": 104200,
+        "pl": 16120
+      }
+    ],
+    "stock_spot_us": [
+      {
+        "name": "テスラ",
+        "valuation": 699009,
+        "pl": 280304
+      },
+      {
+        "name": "テスラ",
+        "valuation": 826102,
+        "pl": 150530
+      },
+      {
+        "name": "エヌビディア",
+        "valuation": 479857,
+        "pl": 412859
+      },
+      {
+        "name": "スーパー・マイクロ・コンピューター",
+        "valuation": 45301,
+        "pl": -7368
+      },
+      {
+        "name": "パランティア・テクノロジーズ",
+        "valuation": 394746,
+        "pl": 133106
+      },
+      {
+        "name": "ソーファイ・テクノロジーズ",
+        "valuation": 292788,
+        "pl": 7203
+      },
+      {
+        "name": "オン・ホールディング",
+        "valuation": 29305,
+        "pl": -10662
+      },
+      {
+        "name": "マーベル・テクノロジー・グループ",
+        "valuation": 22157,
+        "pl": 8080
+      },
+      {
+        "name": "ファイザー",
+        "valuation": 511473,
+        "pl": 31384
+      },
+      {
+        "name": "サウンドハウンド・エーアイ",
+        "valuation": 102531,
+        "pl": -62227
+      },
+      {
+        "name": "アルファベット クラスA",
+        "valuation": 54197,
+        "pl": 7192
+      },
+      {
+        "name": "コアウィーブ",
+        "valuation": 111208,
+        "pl": -8973
+      },
+      {
+        "name": "Direxion デ イ リ ー PLTR ブル2倍 ETF",
+        "valuation": 69126,
+        "pl": -10431
+      },
+      {
+        "name": "コーマイニング",
+        "valuation": 103445,
+        "pl": -11807
+      }
+    ],
+    "stock_margin": [
+      {
+        "name": "信用保証金",
+        "valuation": 382106,
+        "pl": 0
+      },
+      {
+        "name": "米国株式信用保証金(USD)",
+        "valuation": 10,
+        "pl": 0
+      }
+    ],
+    "investment_trust": [
+      {
+        "name": "楽天・全米株式インデックス・ファンド(楽天・VTI)",
+        "valuation": 46295,
+        "pl": 18795
+      },
+      {
+        "name": "楽天・全米株式インデックス・ファンド(楽天・VTI)",
+        "valuation": 200848,
+        "pl": 56405
+      },
+      {
+        "name": "楽天・全米株式インデックス・ファンド(楽天・VTI)",
+        "valuation": 655018,
+        "pl": 335020
+      },
+      {
+        "name": "eMAXIS Slim 米国株式(S&P500)",
+        "valuation": 764564,
+        "pl": 236953
+      },
+      {
+        "name": "eMAXIS Slim 米国株式(S&P500)",
+        "valuation": 45442,
+        "pl": 11651
+      },
+      {
+        "name": "eMAXIS Slim 米国株式(S&P500)",
+        "valuation": 286520,
+        "pl": 149697
+      },
+      {
+        "name": "eMAXIS Slim 全世界株式(オール・カントリー)(オルカン)",
+        "valuation": 418190,
+        "pl": 120411
+      },
+      {
+        "name": "eMAXIS Slim 全世界株式(オール・カントリー)(オルカン)",
+        "valuation": 26303,
+        "pl": 6303
+      },
+      {
+        "name": "eMAXIS Slim 全世界株式(オール・カントリー)(オルカン)",
+        "valuation": 646027,
+        "pl": 331030
+      },
+      {
+        "name": "iFreeNEXT FANG+インデックス",
+        "valuation": 300112,
+        "pl": 15112
+      },
+      {
+        "name": "iFreeNEXT NASDAQ100インデックス",
+        "valuation": 53372,
+        "pl": 3372
+      }
+    ],
+    "margin_stocks_detail": [
+      {
+        "name": "純銀上場信託",
+        "valuation": 147560,
+        "pl": -75452,
+        "pl_str": "-75,452円"
+      },
+      {
+        "name": "純銀上場信託",
+        "valuation": 73780,
+        "pl": -39774,
+        "pl_str": "-39,774円"
+      },
+      {
+        "name": "純銀上場信託",
+        "valuation": 36890,
+        "pl": -19256,
+        "pl_str": "-19,256円"
+      },
+      {
+        "name": "純銀上場信託",
+        "valuation": 36890,
+        "pl": -4061,
+        "pl_str": "-4,061円"
+      },
+      {
+        "name": "純銀上場信託",
+        "valuation": 36890,
+        "pl": -5558,
+        "pl_str": "-5,558円"
+      },
+      {
+        "name": "純銀上場信託",
+        "valuation": 36890,
+        "pl": -1449,
+        "pl_str": "-1,449円"
+      },
+      {
+        "name": "純銀上場信託",
+        "valuation": 73780,
+        "pl": -2960,
+        "pl_str": "-2,960円"
+      },
+      {
+        "name": "純銀上場信託",
+        "valuation": 36890,
+        "pl": -1718,
+        "pl_str": "-1,718円"
+      },
+      {
+        "name": "純銀上場信託",
+        "valuation": 36890,
+        "pl": 3828,
+        "pl_str": "3,828円"
+      },
+      {
+        "name": "純銀上場信託",
+        "valuation": 36890,
+        "pl": 4209,
+        "pl_str": "4,209円"
+      },
+      {
+        "name": "純銀上場信託",
+        "valuation": 36890,
+        "pl": 3085,
+        "pl_str": "3,085円"
+      },
+      {
+        "name": "純銀上場信託",
+        "valuation": 73780,
+        "pl": 357,
+        "pl_str": "357円"
+      },
+      {
+        "name": "純銀上場信託",
+        "valuation": 73780,
+        "pl": 489,
+        "pl_str": "489円"
+      },
+      {
+        "name": "東急建設",
+        "valuation": 141700,
+        "pl": -21019,
+        "pl_str": "-21,019円"
+      },
+      {
+        "name": "東急建設",
+        "valuation": 141700,
+        "pl": -7744,
+        "pl_str": "-7,744円"
+      },
+      {
+        "name": "四電工",
+        "valuation": 191300,
+        "pl": 19416,
+        "pl_str": "19,416円"
+      },
+      {
+        "name": "四電工",
+        "valuation": 191300,
+        "pl": 17627,
+        "pl_str": "17,627円"
+      },
+      {
+        "name": "フィットイージー",
+        "valuation": 249300,
+        "pl": -36745,
+        "pl_str": "-36,745円"
+      },
+      {
+        "name": "九州フィナンシャルG",
+        "valuation": 131500,
+        "pl": -615,
+        "pl_str": "-615円"
+      },
+      {
+        "name": "SBIホールディングス",
+        "valuation": 318500,
+        "pl": -19857,
+        "pl_str": "-19,857円"
+      },
+      {
+        "name": "ジャパン・ホテル・リート",
+        "valuation": 79700,
+        "pl": 1784,
+        "pl_str": "1,784円"
+      },
+      {
+        "name": "北海道電力",
+        "valuation": 104200,
+        "pl": -595,
+        "pl_str": "-595円"
+      }
+    ],
+    "cash": [
+      {
+        "name": "普通預金",
+        "valuation": 25065
+      },
+      {
+        "name": "残高別普通預金残高",
+        "valuation": 11236
+      },
+      {
+        "name": "円預金(普通預金)",
+        "valuation": 11912
+      },
+      {
+        "name": "米ドル",
+        "valuation": 965
+      }
+    ],
+    "crypto": [
+      {
+        "name": "ビットコイン (固定)",
+        "valuation": 100000
+      }
+    ]
+  }
+}
