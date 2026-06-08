@@ -1,0 +1,6 @@
+[submodule "アプリ開発事業部/mammoblog"]
+	path = アプリ開発事業部/mammoblog
+	url = https://github.com/mamorubaseball/mammoblog.git
+[submodule "投資メディア事業/martialcasino"]
+	path = 投資メディア事業/martialcasino
+	url = https://github.com/mamorubaseball/martialcasino.git
